@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+   <children>
+      <TableView fx:id="movieTable" layoutY="331.0" prefHeight="369.0" prefWidth="900.0">
+        <columns>
+          <TableColumn fx:id="nameColumn" prefWidth="180.0" text="Name" />
+          <TableColumn fx:id="genreColumn" prefWidth="180.0" text="Genre" />
+            <TableColumn fx:id="dateColumn" prefWidth="180.0" text="Release Date" />
+            <TableColumn fx:id="ratingColumn" prefWidth="180.0" text="Rating" />
+            <TableColumn fx:id="buttonColumn" prefWidth="179.0" />
+        </columns>
+      </TableView>
+      <TextField fx:id="searchField" layoutX="340.0" layoutY="113.0" prefHeight="31.0" prefWidth="221.0" />
+      <Text fx:id="titleText" layoutX="364.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Search">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Text>
+      <Button fx:id="nameButton" layoutX="164.0" layoutY="202.0" mnemonicParsing="false" onAction="#addToTable" prefWidth="80.0" text="Name" />
+      <Button fx:id="genreButton" layoutX="283.0" layoutY="202.0" mnemonicParsing="false" prefWidth="80.0" text="Genre" />
+      <Button fx:id="releaseButton" layoutX="409.0" layoutY="202.0" mnemonicParsing="false" prefWidth="80.0" text="Release" />
+      <Button fx:id="ratingButton" layoutX="535.0" layoutY="202.0" mnemonicParsing="false" prefWidth="80.0" text="Rating" />
+      <Button fx:id="actorButton" layoutX="657.0" layoutY="202.0" maxWidth="80.0" mnemonicParsing="false" prefWidth="80.0" text="Actor" />
+   </children>
+</AnchorPane>
