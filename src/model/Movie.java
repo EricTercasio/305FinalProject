@@ -10,10 +10,10 @@ public class Movie {
     private String genre;
     private String releaseDate;
     private double rating;
-    private Duration duration;
+    private int duration;
     private Button button = new Button("More info");
 
-    public Movie(int id, String movieName, String genre, String releaseDate, double rating, Duration duration) {
+    public Movie(int id, String movieName, String genre, String releaseDate, double rating, int duration) {
         this.id = id;
         this.movieName = movieName;
         this.genre = genre;
@@ -64,11 +64,24 @@ public class Movie {
         this.rating = rating;
     }
 
-    public Duration getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", movieName='" + movieName + '\'' +
+                ", genre='" + genre + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", rating=" + rating +
+                ", duration=" + duration +
+                ", button=" + button +
+                '}';
     }
 }
