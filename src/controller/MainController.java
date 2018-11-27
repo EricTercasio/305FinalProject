@@ -4,29 +4,34 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import model.DatabaseModel;
 import model.Movie;
+
+import java.io.Serializable;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class MainController {
+public class MainController implements Initializable {
 
 
     @FXML
     private TableColumn<?, ?> ratingColumn;
 
     @FXML
-    private Button genreButton;
+    private Button searchButton;
+
+    @FXML
+    private ComboBox<?> searchComboBox;
 
     @FXML
     private TableColumn<?, ?> nameColumn;
@@ -35,22 +40,11 @@ public class MainController {
     private TextField searchField;
 
     @FXML
-    private Button nameButton;
-
-    @FXML
     private Text titleText;
-
-    @FXML
-    private Button actorButton;
-
-    @FXML
-    private Button ratingButton;
 
     @FXML
     private TableColumn<?, ?> dateColumn;
 
-    @FXML
-    private Button releaseButton;
 
     @FXML
     private TableColumn<?, ?> genreColumn;
@@ -62,26 +56,42 @@ public class MainController {
     private TableView<Movie> movieTable;
 
     DatabaseModel databaseModel = new DatabaseModel();
+    /*
+        Initalize Combo Box options
+     */
     @FXML
     void addToTable(ActionEvent event) throws SQLException {
         String name = searchField.getText();
-        List movies = databaseModel.getMovieByName(name);
-        databaseModel.restartConnect();
-        ObservableList data = FXCollections.observableList(movies);
-        movieTable.setItems(data);
-        nameColumn.setCellValueFactory(new PropertyValueFactory("movieName"));
-        genreColumn.setCellValueFactory(new PropertyValueFactory("genre"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory("releaseDate"));
-        ratingColumn.setCellValueFactory(new PropertyValueFactory("rating"));
-        buttonColumn.setCellValueFactory(new PropertyValueFactory("button"));
+        String searchBy = (String) searchComboBox.getValue();
+        if(searchBy == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Please select a search criteria");
+            alert.setHeaderText("Error");
+            alert.showAndWait();
+        }else {
+            List movies = databaseModel.getMovies(name,searchBy);
+            databaseModel.restartConnect();
+            ObservableList data = FXCollections.observableList(movies);
+            movieTable.setItems(data);
+            nameColumn.setCellValueFactory(new PropertyValueFactory("movieName"));
+            genreColumn.setCellValueFactory(new PropertyValueFactory("genre"));
+            dateColumn.setCellValueFactory(new PropertyValueFactory("releaseDate"));
+            ratingColumn.setCellValueFactory(new PropertyValueFactory("rating"));
+            buttonColumn.setCellValueFactory(new PropertyValueFactory("button"));
+        }
 
     }
-    ObservableList getTableData(){
-        List list = new ArrayList<>();
-        list.add(new Movie(0,"Jaws","Horror","2018",10,10));
-        ObservableList data = FXCollections.observableList(list);
-        return data;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        List list = new ArrayList<String>();
+        list.add("Name");
+        list.add("Genre");
+        list.add("Release Date");
+        list.add("Rating");
+        list.add("Actor");
+        list.add("Director");
+        searchComboBox.setItems(FXCollections.observableList(list));
     }
-
 }
 

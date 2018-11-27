@@ -18,16 +18,13 @@
             <TableColumn fx:id="buttonColumn" prefWidth="179.0" />
         </columns>
       </TableView>
-      <TextField fx:id="searchField" layoutX="340.0" layoutY="113.0" prefHeight="31.0" prefWidth="221.0" />
+      <TextField fx:id="searchField" layoutX="352.0" layoutY="123.0" prefHeight="31.0" prefWidth="221.0" />
       <Text fx:id="titleText" layoutX="364.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie Search">
          <font>
             <Font size="29.0" />
          </font>
       </Text>
-      <Button fx:id="nameButton" layoutX="164.0" layoutY="202.0" mnemonicParsing="false" onAction="#addToTable" prefWidth="80.0" text="Name" />
-      <Button fx:id="genreButton" layoutX="283.0" layoutY="202.0" mnemonicParsing="false" prefWidth="80.0" text="Genre" />
-      <Button fx:id="releaseButton" layoutX="409.0" layoutY="202.0" mnemonicParsing="false" prefWidth="80.0" text="Release" />
-      <Button fx:id="ratingButton" layoutX="535.0" layoutY="202.0" mnemonicParsing="false" prefWidth="80.0" text="Rating" />
-      <Button fx:id="actorButton" layoutX="657.0" layoutY="202.0" maxWidth="80.0" mnemonicParsing="false" prefWidth="80.0" text="Actor" />
+      <ComboBox fx:id="searchComboBox" layoutX="176.0" layoutY="123.0" prefWidth="150.0" promptText="Search by" />
+      <Button fx:id="searchButton" layoutX="595.0" layoutY="123.0" mnemonicParsing="false" onAction="#addToTable" text="Search" />
    </children>
 </AnchorPane>
