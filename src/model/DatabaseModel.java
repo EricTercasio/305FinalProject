@@ -56,7 +56,7 @@ public class DatabaseModel {
         PreparedStatement statement;
         ResultSet set;
         String query = null;
-        if(actorFlag == 1){
+        if(actorFlag == 1 | directorFlag == 1){
             //First get actor ID, then go through castee table to get all the movie ID's, then search by movie ID
             String[] nameArray = name.split(" ");
             String firstName = nameArray[0];
@@ -72,7 +72,16 @@ public class DatabaseModel {
             while(set.next()) {
                 personId = set.getInt(1);
             }
-            query = "SELECT movieID from casted where casteeID = ?";
+            String table;
+            String idType;
+            if(actorFlag == 1){
+                table = "casted";
+                idType = "casteeID";
+            }else{
+                table = "directed";
+                idType = "directorID";
+            }
+            query = "SELECT movieID from "+table +" where "+idType+" = ?";
             statement = connection.prepareStatement(query);
             statement.setInt(1,personId);
             set = statement.executeQuery();
@@ -81,14 +90,11 @@ public class DatabaseModel {
             }
             searchCriteria = "movieID";
 
-
-        }else if(directorFlag == 1){
-
         }
 
         query = "SELECT * from Movie where " + searchCriteria + " = ?";
         statement = connection.prepareStatement(query);
-        if(actorFlag == 1){
+        if(actorFlag == 1 | directorFlag == 1){
             if (movieIds.size() == 0){
                 return movies; //Return empty list
             }
@@ -103,6 +109,49 @@ public class DatabaseModel {
         }else {
             statement.setString(1, name);
         }
+        set = statement.executeQuery();
+
+        while(set.next()){
+            id = set.getInt(1);
+            genre = set.getString(2);
+            movieName = set.getString(3);
+            releaseDate = set.getString(4);
+            rating = set.getDouble(5);
+            duration = set.getInt(6);
+            Movie movie = new Movie(id,movieName,genre,releaseDate,rating,duration);
+            movies.add(movie);
+        }
+        statement.close();
+        set.close();
+        connection.close();
+        return movies;
+    }
+
+    public ArrayList<Movie> getMoviesByButtons(int action) throws SQLException {
+        int id;
+        String movieName;
+        String genre;
+        String releaseDate;
+        double rating;
+        int duration;
+        PreparedStatement statement;
+        ResultSet set;
+        String query = null;
+        String selectedAction = null;
+        ArrayList<Movie> movies = new ArrayList<>();
+        if(action == 1){
+            selectedAction = "rating >= 9";
+        }
+
+        query = "SELECT * FROM Movie WHERE " + selectedAction;
+        if(action == 2){
+            query = "SELECT * FROM Movie";
+        }
+
+        if (action == 3) {
+            query = "SELECT * FROM Movie WHERE duration > 150";
+        }
+        statement = connection.prepareStatement(query);
         set = statement.executeQuery();
 
         while(set.next()){

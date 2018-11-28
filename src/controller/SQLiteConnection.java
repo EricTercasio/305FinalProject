@@ -7,7 +7,7 @@ public class SQLiteConnection {
     public static Connection Connector() {
         try {
             Class.forName("org.sqlite.JDBC");
-            Connection connection = DriverManager.getConnection("jdbc:sqlite:databaseV2.db");
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:database.db");
             return connection;
         } catch (Exception e) {
             System.out.println(e);

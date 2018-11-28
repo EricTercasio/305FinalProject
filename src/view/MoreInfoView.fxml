@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MoreInfoController">
+   <children>
+      <Text fx:id="nameText" fill="#eb0000" layoutX="143.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of the movie" textAlignment="CENTER">
+         <font>
+            <Font size="37.0" />
+         </font>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Text>
+      <Text fx:id="releasedText" layoutX="82.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Released :  ">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="genreText" layoutX="82.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre: ">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="ratingText" layoutX="82.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rating : ">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="durationText" layoutX="82.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duration : ">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="castText" layoutX="82.0" layoutY="217.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cast :">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="directorsText" layoutX="81.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Directors : ">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="producersText" layoutX="81.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Producers : ">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="distributorsText" layoutX="81.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Distributors : ">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Button layoutX="14.0" layoutY="355.0" mnemonicParsing="false" text="Close" />
+   </children>
+</AnchorPane>

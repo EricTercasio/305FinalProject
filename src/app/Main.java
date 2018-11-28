@@ -18,7 +18,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         SQLiteConnection.Connector();
         Parent root = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Movie Search");
         primaryStage.setScene(new Scene(root, 900, 700));
         primaryStage.show();
     }

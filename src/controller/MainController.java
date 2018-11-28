@@ -4,15 +4,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.DatabaseModel;
 import model.Movie;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -29,6 +35,15 @@ public class MainController implements Initializable {
 
     @FXML
     private Button searchButton;
+
+    @FXML
+    private Button longestButton;
+
+    @FXML
+    private Button ratedButton;
+
+    @FXML
+    private Button allButton;
 
     @FXML
     private ComboBox<?> searchComboBox;
@@ -82,6 +97,46 @@ public class MainController implements Initializable {
         }
 
     }
+    @FXML
+    void ratedButtonEvent(ActionEvent event) throws SQLException {
+        List movies = databaseModel.getMoviesByButtons(1);
+        databaseModel.restartConnect();
+        ObservableList data = FXCollections.observableList(movies);
+        movieTable.setItems(data);
+        nameColumn.setCellValueFactory(new PropertyValueFactory("movieName"));
+        genreColumn.setCellValueFactory(new PropertyValueFactory("genre"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory("releaseDate"));
+        ratingColumn.setCellValueFactory(new PropertyValueFactory("rating"));
+        buttonColumn.setCellValueFactory(new PropertyValueFactory("button"));
+
+    }
+    @FXML
+    void allButtonEvent(ActionEvent event) throws SQLException {
+        List movies = databaseModel.getMoviesByButtons(2);
+        databaseModel.restartConnect();
+        ObservableList data = FXCollections.observableList(movies);
+        movieTable.setItems(data);
+        nameColumn.setCellValueFactory(new PropertyValueFactory("movieName"));
+        genreColumn.setCellValueFactory(new PropertyValueFactory("genre"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory("releaseDate"));
+        ratingColumn.setCellValueFactory(new PropertyValueFactory("rating"));
+        buttonColumn.setCellValueFactory(new PropertyValueFactory("button"));
+        setMoreInfoOnAction((ArrayList<Movie>) movies);
+
+    }
+    @FXML
+    void longestButtonEvent(ActionEvent event) throws SQLException {
+        List movies = databaseModel.getMoviesByButtons(3);
+        databaseModel.restartConnect();
+        ObservableList data = FXCollections.observableList(movies);
+        movieTable.setItems(data);
+        nameColumn.setCellValueFactory(new PropertyValueFactory("movieName"));
+        genreColumn.setCellValueFactory(new PropertyValueFactory("genre"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory("releaseDate"));
+        ratingColumn.setCellValueFactory(new PropertyValueFactory("rating"));
+        buttonColumn.setCellValueFactory(new PropertyValueFactory("button"));
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         List list = new ArrayList<String>();
@@ -92,6 +147,23 @@ public class MainController implements Initializable {
         list.add("Actor");
         list.add("Director");
         searchComboBox.setItems(FXCollections.observableList(list));
+    }
+
+    void setMoreInfoOnAction(ArrayList<Movie> movies){
+        for(int i = 0; i < movies.size(); i++){
+            movies.get(i).getButton().setOnAction(e->{
+                System.out.println("...");
+                try {
+                    Parent root = FXMLLoader.load(getClass().getResource("/view/MoreInfoView.fxml"));
+                    Stage newStage = new Stage();
+                    newStage.setTitle("Additional Information");
+                    newStage.setScene(new Scene(root,600,400));
+                    newStage.show();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            });
+        }
     }
 }
 

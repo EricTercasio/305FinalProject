@@ -26,5 +26,8 @@
       </Text>
       <ComboBox fx:id="searchComboBox" layoutX="176.0" layoutY="123.0" prefWidth="150.0" promptText="Search by" />
       <Button fx:id="searchButton" layoutX="595.0" layoutY="123.0" mnemonicParsing="false" onAction="#addToTable" text="Search" />
+      <Button fx:id="ratedButton" layoutX="212.0" layoutY="224.0" mnemonicParsing="false" onAction="#ratedButtonEvent" text="Highest Rated" />
+      <Button fx:id="allButton" layoutX="390.0" layoutY="224.0" mnemonicParsing="false" onAction="#allButtonEvent" prefHeight="31.0" prefWidth="124.0" text="All Movies" />
+      <Button fx:id="longestButton" layoutX="573.0" layoutY="224.0" mnemonicParsing="false" onAction="#longestButtonEvent" text="Longest Movies" />
    </children>
 </AnchorPane>
