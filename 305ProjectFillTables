@@ -1,3 +1,88 @@
+Create Statements : 
+
+CREATE SCHEMA 'imdb';
+
+CREATE TABLE Movie(
+    movieID INTEGER NOT NULL,
+    genre VARCHAR(50),
+    movieName VARCHAR(255),
+    releaseDate DATE,
+    rating DOUBLE,
+    duration TIME,
+    CHECK(rating <= 10 AND rating >= 0),
+    PRIMARY KEY(movieId)
+)
+
+CREATE TABLE person(
+	ID INTEGER NOT NULL,
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
+    age INTEGER(255),
+    profession VARCHAR(255),
+    
+    CHECK(profession IN ("Actor","Director","Producer")),
+    PRIMARY KEY (id)
+)
+
+CREATE TABLE distributor(
+	ID INTEGER NOT NULL,
+    distributorName VARCHAR(255) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    
+    PRIMARY KEY (id)
+)
+
+CREATE TABLE awards(
+	ID INTEGER NOT NULL,
+    awardName VARCHAR(255) NOT NULL,
+    awardDate DATE,
+    awardeeID INTEGER NOT NULL,
+    
+    PRIMARY KEY (ID),
+    FOREIGN KEY (awardeeID) REFERENCES person(ID)
+)
+
+CREATE TABLE casted(
+	ID INTEGER NOT NULL,
+    movieID INTEGER NOT NULL,
+    casteeID INTEGER NOT NULL,
+    
+    PRIMARY KEY (ID),
+    FOREIGN KEY (casteeID) REFERENCES person(ID),
+    FOREIGN KEY (movieID) REFERENCES movieID(ID)
+)
+
+CREATE TABLE produced(
+	ID INTEGER NOT NULL,
+    movieID INTEGER NOT NULL,
+    producerID INTEGER NOT NULL,
+    
+    PRIMARY KEY (ID),
+    FOREIGN KEY (produerID) REFERENCES person(ID),
+    FOREIGN KEY (movieID) REFERENCES movieID(ID)
+)
+CREATE TABLE directed(
+	ID INTEGER NOT NULL,
+    movieID INTEGER NOT NULL,
+    directorID INTEGER NOT NULL,
+    
+    PRIMARY KEY (ID),
+    FOREIGN KEY (directorID) REFERENCES person(ID),
+    FOREIGN KEY (movieID) REFERENCES movieID(ID)
+)
+
+CREATE TABLE distributed(
+	ID INTEGER NOT NULL,
+    movieID INTEGER NOT NULL,
+    distributorID INTEGER NOT NULL,
+    
+    PRIMARY KEY (ID),
+    FOREIGN KEY (distributorID) REFERENCES distributor(ID),
+    FOREIGN KEY (movieID) REFERENCES movieID(ID)
+)
+
+----------------------------------------------------------------------------------
+
 Fill tables: 
 
 INSERT INTO Movie(movieID, genre, movieName, releaseDate, rating, duration)

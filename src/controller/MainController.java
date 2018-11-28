@@ -94,6 +94,7 @@ public class MainController implements Initializable {
             dateColumn.setCellValueFactory(new PropertyValueFactory("releaseDate"));
             ratingColumn.setCellValueFactory(new PropertyValueFactory("rating"));
             buttonColumn.setCellValueFactory(new PropertyValueFactory("button"));
+            setMoreInfoOnAction((ArrayList<Movie>) movies);
         }
 
     }
@@ -108,6 +109,7 @@ public class MainController implements Initializable {
         dateColumn.setCellValueFactory(new PropertyValueFactory("releaseDate"));
         ratingColumn.setCellValueFactory(new PropertyValueFactory("rating"));
         buttonColumn.setCellValueFactory(new PropertyValueFactory("button"));
+        setMoreInfoOnAction((ArrayList<Movie>) movies);
 
     }
     @FXML
@@ -135,6 +137,7 @@ public class MainController implements Initializable {
         dateColumn.setCellValueFactory(new PropertyValueFactory("releaseDate"));
         ratingColumn.setCellValueFactory(new PropertyValueFactory("rating"));
         buttonColumn.setCellValueFactory(new PropertyValueFactory("button"));
+        setMoreInfoOnAction((ArrayList<Movie>) movies);
     }
 
     @Override
@@ -151,15 +154,19 @@ public class MainController implements Initializable {
 
     void setMoreInfoOnAction(ArrayList<Movie> movies){
         for(int i = 0; i < movies.size(); i++){
+            Movie movie = movies.get(i);
             movies.get(i).getButton().setOnAction(e->{
-                System.out.println("...");
                 try {
-                    Parent root = FXMLLoader.load(getClass().getResource("/view/MoreInfoView.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MoreInfoView.fxml"));
+                    Parent root = loader.load();
                     Stage newStage = new Stage();
                     newStage.setTitle("Additional Information");
                     newStage.setScene(new Scene(root,600,400));
+
+                    MoreInfoController infoController = loader.getController();
+                    infoController.setAllText(movie);
                     newStage.show();
-                } catch (IOException e1) {
+                } catch (IOException | SQLException e1) {
                     e1.printStackTrace();
                 }
             });

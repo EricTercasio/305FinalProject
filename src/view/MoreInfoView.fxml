@@ -8,10 +8,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MoreInfoController">
    <children>
-      <Text fx:id="nameText" fill="#eb0000" layoutX="143.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of the movie" textAlignment="CENTER">
+      <Text fx:id="nameText" fill="#eb0000" layoutX="82.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name of the movie" textAlignment="CENTER">
          <font>
             <Font size="37.0" />
          </font>
@@ -59,6 +58,6 @@
             <Font size="21.0" />
          </font>
       </Text>
-      <Button layoutX="14.0" layoutY="355.0" mnemonicParsing="false" text="Close" />
+      <Button layoutX="14.0" layoutY="355.0" mnemonicParsing="false" onAction="#closeWindow" text="Close" />
    </children>
 </AnchorPane>

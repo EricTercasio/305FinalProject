@@ -169,6 +169,57 @@ public class DatabaseModel {
         connection.close();
         return movies;
     }
+    public ArrayList<Person> getAdditionalInfo(int movieID, String type) throws SQLException {
+        ArrayList<Person> cast = new ArrayList<>();
+        PreparedStatement statement;
+        ResultSet set;
+        String query = null;
+        query = "SELECT * FROM " +type + " WHERE movieID = ?";
+        statement = connection.prepareStatement(query);
+        statement.setInt(1,movieID);
+        set = statement.executeQuery();
+
+        ArrayList<Integer> ids = new ArrayList<>();
+
+        while(set.next()){
+            ids.add(set.getInt(3)); //Gets the ID of the person...
+        }
+        if(type.equals("distributed")){
+            query = "SELECT * FROM distributor WHERE ID = ?";
+        }else
+        query = "SELECT * FROM person WHERE ID = ?";
+        for(int k = 1; k < ids.size(); k++){
+            query = query.concat(" OR ID = ?");
+        }
+        statement = connection.prepareStatement(query);
+        for(int k = 0; k < ids.size(); k++) {
+            statement.setInt(k + 1, (Integer) ids.get(k));
+        }
+
+        set = statement.executeQuery();
+
+        while(set.next()){
+            Person person = new Person();
+            if(type.equals("distributed")){
+                person.setFirstName(set.getString(2)); //First name == distributor name
+                person.setLastName(set.getString(3));//Last name == location
+            }else {
+                person.setFirstName(set.getString(2));
+                person.setLastName(set.getString(3));
+                person.setAge(set.getInt(4));
+                person.setProfession(set.getString(5));
+            }
+            cast.add(person);
+
+        }
+        statement.close();
+        set.close();
+        connection.close();
+
+
+
+        return cast;
+    }
     /*
         Used to restart connection
         Must close and restart connection for each transaction.
