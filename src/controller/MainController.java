@@ -150,6 +150,7 @@ public class MainController implements Initializable {
         list.add("Actor");
         list.add("Director");
         searchComboBox.setItems(FXCollections.observableList(list));
+        searchField.setStyle("-fx-text-inner-color: #FFFFFF; -fx-font-size: 14; -fx-background-color:  #2a4170");
     }
 
     void setMoreInfoOnAction(ArrayList<Movie> movies){

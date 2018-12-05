@@ -31,6 +31,7 @@ public class DatabaseModel {
         ArrayList movieIds = new ArrayList();
         int actorFlag = 0;
         int directorFlag = 0;
+        int producerFlag = 0;
         //Setup switch case to convert searchBy to SQL variable name
         switch(searchBy){
             case "Name": searchCriteria = "movieName";
@@ -45,6 +46,8 @@ public class DatabaseModel {
                 break;
             case "Director": directorFlag = 1;
                 break;
+            case "Producer": producerFlag = 1;
+                break;
         }
         ArrayList<Movie> movies = new ArrayList<>();
         int id;
@@ -56,7 +59,7 @@ public class DatabaseModel {
         PreparedStatement statement;
         ResultSet set;
         String query = null;
-        if(actorFlag == 1 | directorFlag == 1){
+        if(actorFlag == 1 | directorFlag == 1 | producerFlag == 1){
             //First get actor ID, then go through castee table to get all the movie ID's, then search by movie ID
             String[] nameArray = name.split(" ");
             String firstName = nameArray[0];
@@ -77,11 +80,15 @@ public class DatabaseModel {
             if(actorFlag == 1){
                 table = "casted";
                 idType = "casteeID";
-            }else{
+            }else if(directorFlag == 1){
                 table = "directed";
                 idType = "directorID";
+            }else{
+                table = "produced";
+                idType = "producerID";
             }
             query = "SELECT movieID from "+table +" where "+idType+" = ?";
+
             statement = connection.prepareStatement(query);
             statement.setInt(1,personId);
             set = statement.executeQuery();
@@ -94,7 +101,7 @@ public class DatabaseModel {
 
         query = "SELECT * from Movie where " + searchCriteria + " = ?";
         statement = connection.prepareStatement(query);
-        if(actorFlag == 1 | directorFlag == 1){
+        if(actorFlag == 1 | directorFlag == 1 | producerFlag == 1){
             if (movieIds.size() == 0){
                 return movies; //Return empty list
             }
@@ -232,4 +239,27 @@ public class DatabaseModel {
         }
     }
 
+    public ArrayList<String> getAwards(String firstName, String lastName) throws SQLException {
+        ArrayList<String> awards = new ArrayList<>();
+        PreparedStatement statement;
+        ResultSet set;
+        String query = null;
+        query = "SELECT ID FROM person WHERE firstName = ? AND lastName = ?";
+        statement = connection.prepareStatement(query);
+        statement.setString(1,firstName);
+        statement.setString(2,lastName);
+        set = statement.executeQuery();
+        int id = 0;
+        while(set.next()){
+            id = set.getInt(1);
+        }
+        query = "SELECT * FROM awards WHERE awardeeID = ?";
+        statement = connection.prepareStatement(query);
+        statement.setInt(1,id);
+        set = statement.executeQuery();
+        while(set.next()){
+            awards.add(set.getString(2));
+        }
+        return awards;
+    }
 }

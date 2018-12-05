@@ -20,6 +20,7 @@ public class Movie {
         this.releaseDate = releaseDate;
         this.rating = rating;
         this.duration = duration;
+        button.setStyle("-fx-background-color: #2a4170; -fx-text-fill: #FFFFFF");
     }
     public Button getButton(){
         return button;

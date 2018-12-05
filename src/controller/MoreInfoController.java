@@ -2,13 +2,22 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.DatabaseModel;
 import model.Movie;
 import model.Person;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -41,6 +50,15 @@ public class MoreInfoController {
 
     @FXML
     private Text distributorsText;
+
+    @FXML
+    private HBox castBox;
+
+    @FXML
+    private HBox directorBox;
+
+    @FXML
+    private HBox producerBox;
 
     DatabaseModel databaseModel = new DatabaseModel();
 
@@ -92,11 +110,44 @@ public class MoreInfoController {
             Person person = people.get(i);
             if(text.getText().equals("Distributors : ")){
                 text.setText(text.getText().concat(" " +person.getFirstName() + " (" + person.getLastName() + ")"));
+                if(i != people.size() - 1){
+                    text.setText(text.getText().concat(","));
+                }
             }else
-            text.setText(text.getText().concat(" " +person.getFirstName() + " " + person.getLastName()));
-            if(i != people.size() - 1){
-                text.setText(text.getText().concat(","));
+            {
+                Hyperlink link = new Hyperlink(person.getFirstName() + " " + person.getLastName());
+                link.setFont(new Font(21));
+                link.setOnAction(e->{
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PersonInformationView.fxml"));
+                    Parent root = null;
+                    try {
+                        root = loader.load();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                    Stage newStage = new Stage();
+                    newStage.setTitle("Additional Information");
+                    newStage.setScene(new Scene(root,600,400));
+
+                    PersonInformationController controller = loader.getController();
+                    try {
+                        controller.setAllText(person);
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                    newStage.show();
+                });
+                if(text.getText().equals("Cast : ")) {
+                    castBox.getChildren().add(link);
+                }
+                if(text.getText().equals("Producers : ")){
+                    producerBox.getChildren().add(link);
+                }
+                if(text.getText().equals("Directors : ")){
+                    directorBox.getChildren().add(link);
+                }
             }
+
         }
     }
 
